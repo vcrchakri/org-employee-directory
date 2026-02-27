@@ -1,172 +1,168 @@
-🚀 Employee Directory System
+# 🏢 Org Employee Directory
 
+A full-stack web application that helps organizations manage and search employee information quickly and efficiently.
 
+This system provides a centralized employee directory with search, filters, and sorting features to improve accessibility of employee data.
 
+---
 
+# 🚀 Features
 
+* 🔍 Search employees by **name or employee ID**
+* 📊 Filter employees by **active / exited status**
+* 🔃 Sort employees by **name or joining date**
+* 📄 View employee details in a clean interface
+* ⚡ Fast backend API responses
+* 📱 Responsive UI
 
+---
 
+# 🧰 Tech Stack
 
-A full-stack employee management and search platform that helps organizations quickly find employee information using powerful search, filtering, and sorting.
+## Frontend
 
-Built for performance, simplicity, and scalability.
+* React.js
+* HTML
+* CSS
+* JavaScript
 
-📌 Problem Statement
+## Backend
 
-As organizations grow, employee information becomes difficult to locate quickly. HR teams and managers need a centralized platform to search and filter employees efficiently.
+* Django
+* Python
+* REST APIs
 
-This project solves that problem with a searchable employee directory.
+## Database
 
-✨ Features
+* MySQL
 
-✅ Employee listing dashboard
-✅ Search by Employee Name / ID
-✅ Filter by Active / Exited Employees
-✅ Sort employees by Name or Start Date
-✅ Responsive UI
-✅ Backend API integration
-✅ Clean project architecture
+## Tools
 
+* Git & GitHub
+* VS Code
+* Postman
 
-Example deployment options:
+---
 
-Render
+# 📂 Project Structure
 
-Vercel
-
-Railway
-
-Netlify
-
-🏗️ Tech Stack
-Frontend
-
-HTML
-
-CSS
-
-JavaScript
-
-Backend
-
-Python
-
-Django
-
-Database
-
-SQLite / MySQL
-
-Tools
-
-Git
-
-GitHub
-
-VS Code
-
-📂 Project Structure
-team2
+```
+org-employee-directory
 │
 ├── backend
-│   ├── backend
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   └── wsgi.py
-│   │
-│   └── hackathon
-│       ├── models.py
-│       ├── views.py
-│       ├── urls.py
+│   ├── manage.py
+│   ├── requirements.txt
+│   └── django apps
 │
 ├── frontend
-│   └── index.html
+│   ├── src
+│   ├── components
+│   └── pages
 │
+├── .gitignore
 └── README.md
-⚙️ Installation Guide
-1️⃣ Clone the repository
-git clone https://github.com/vcrchakri/vchak.git
-cd team2
-2️⃣ Create Virtual Environment
+```
+
+---
+
+# ⚙️ Installation Guide
+
+## 1️⃣ Clone the repository
+
+```
+git clone https://github.com/vcrchakri/org-employee-directory.git
+cd org-employee-directory
+```
+
+---
+
+# Backend Setup
+
+```
+cd backend
 python -m venv venv
 venv\Scripts\activate
-
-Mac/Linux
-
-source venv/bin/activate
-3️⃣ Install Dependencies
-pip install django
-4️⃣ Run Migrations
-python manage.py migrate
-5️⃣ Start Development Server
+pip install -r requirements.txt
 python manage.py runserver
+```
 
-Open
+Server runs on
 
+```
 http://127.0.0.1:8000
-🔌 API Capabilities
-Method	Endpoint	Description
-GET	/employees	Fetch employees
-POST	/employees	Add employee
-PUT	/employees/id	Update employee
-DELETE	/employees/id	Remove employee
-🚀 Future Enhancements
+```
 
-Authentication & Login
+---
 
-Admin Dashboard
+# Frontend Setup
 
-Pagination
+```
+cd frontend
+npm install
+npm start
+```
 
-Employee Profile Pages
+Frontend runs on
 
-Analytics Dashboard
+```
+http://localhost:3000
+```
 
-Cloud Deployment
+---
 
-REST API Expansion
+# 🔌 Example API Endpoints
 
-🧠 What I Learned
+### Get Employees
 
-Full-stack development workflow
+```
+GET /api/employees
+```
 
-API integration with frontend
+### Search Employees
 
-Django backend architecture
+```
+GET /api/employees?search=John
+```
 
-Git version control
+### Filter Employees
 
-Project structuring for production
+```
+GET /api/employees?status=active
+```
 
-👨‍💻 Author
+---
 
-Chakri
+# 📊 Use Case
 
-GitHub
-https://github.com/vcrchakri
+HR teams and organizations can use this system to:
 
-🌟 Support
+* Maintain employee records
+* Search employees instantly
+* Track employment status
+* Manage workforce data efficiently
 
-If you like this project:
+---
 
-⭐ Star the repository
-🍴 Fork it
-🐛 Report issues
+# 🔮 Future Improvements
 
-📜 License
+* Authentication system
+* Admin dashboard
+* Pagination
+* Role-based access
+* Cloud deployment
+* Analytics dashboard
 
-This project is open-source and available for learning purposes.
+---
 
-💼 Recruiter Note
+# 👨‍💻 Author
 
-This project demonstrates:
+**Chakradhar**
 
-Backend development
+Full Stack Developer
+Python • React • AI Projects
 
-API design
+---
 
-UI development
+# ⭐ Support
 
-Problem solving
-
-Real-world application architecture
+If you found this project useful, give it a star on GitHub!

@@ -1,0 +1,426 @@
+/* ─── Role Change Tracking Page Styles ─────────────────────────────────── */
+
+/* Layout mirrors the existing employee‑directory shell */
+.rc-shell {
+  display: flex;
+  height: 100vh;
+  background: var(--light-3);
+  font-family: 'Mulish', sans-serif;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.rc-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid var(--light-1);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  overflow-y: auto;
+}
+
+.rc-sidebar-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.rc-search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.rc-search-input {
+  flex: 1;
+  border: 1px solid var(--light-1);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--dark-1);
+  outline: none;
+  transition: border-color 0.18s;
+}
+
+.rc-search-input:focus {
+  border-color: var(--primary);
+}
+
+.rc-search-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.rc-search-btn:hover { background: var(--primary-dark); }
+.rc-search-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Employee card in sidebar */
+.rc-emp-card {
+  background: var(--primary-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 20px;
+}
+
+.rc-emp-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark-1);
+  margin-bottom: 2px;
+}
+
+.rc-emp-id {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.rc-emp-designation {
+  font-size: 12px;
+  color: var(--dark-2);
+  margin-bottom: 4px;
+}
+
+.rc-emp-ctc {
+  font-size: 12px;
+  color: var(--dark-3);
+}
+
+.rc-emp-ctc span {
+  font-weight: 700;
+  color: var(--success);
+}
+
+.rc-back-btn {
+  background: none;
+  border: 1px solid var(--light-1);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--dark-2);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+  margin-top: auto;
+}
+
+.rc-back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ─── Main area ──────────────────────────────────────────────────────────── */
+.rc-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rc-topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--light-1);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.rc-topbar-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark-1);
+}
+
+.rc-topbar-sub {
+  font-size: 13px;
+  color: var(--dark-3);
+  margin-top: 2px;
+}
+
+.rc-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ─── Add Record Form Card ───────────────────────────────────────────────── */
+.rc-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.05);
+}
+
+.rc-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark-1);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rc-card-title i { color: var(--primary); }
+
+.rc-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.rc-form-grid .full-col { grid-column: 1 / -1; }
+
+.rc-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dark-2);
+  margin-bottom: 5px;
+}
+
+.rc-field input,
+.rc-field select,
+.rc-field textarea {
+  width: 100%;
+  border: 1px solid var(--light-1);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--dark-1);
+  background: var(--light-4);
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.rc-field input:focus,
+.rc-field select:focus,
+.rc-field textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
+  background: #fff;
+}
+
+.rc-submit-btn {
+  margin-top: 18px;
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+}
+
+.rc-submit-btn:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); }
+.rc-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.rc-form-error {
+  margin-top: 12px;
+  background: #fff2f2;
+  border: 1px solid #ffd0d0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--error);
+}
+
+.rc-form-success {
+  margin-top: 12px;
+  background: #f0fff7;
+  border: 1px solid #b2f0d5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--success);
+}
+
+/* ─── Timeline ───────────────────────────────────────────────────────────── */
+.rc-timeline-wrap {
+  position: relative;
+}
+
+.rc-timeline-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--dark-3);
+  font-size: 14px;
+}
+
+.rc-timeline-empty i {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 10px;
+  color: var(--dark-4);
+}
+
+.rc-timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.rc-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--light-1);
+  border-radius: 1px;
+}
+
+.rc-tl-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.rc-tl-dot {
+  position: absolute;
+  left: -23px;
+  top: 10px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--light-1);
+  background: var(--dark-4);
+  transition: transform 0.18s;
+}
+
+.rc-tl-dot.current {
+  background: var(--success);
+  box-shadow: 0 0 0 2px #b2f0d5;
+}
+
+.rc-tl-item:hover .rc-tl-dot { transform: scale(1.2); }
+
+.rc-tl-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.05);
+  border: 1px solid var(--light-2);
+  transition: box-shadow 0.18s;
+}
+
+.rc-tl-card:hover { box-shadow: 0 4px 14px rgba(51,119,255,.1); }
+
+.rc-tl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rc-tl-role {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark-1);
+}
+
+.rc-tl-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+}
+
+.rc-tl-badge.current {
+  background: #f0fff7;
+  color: var(--success);
+}
+
+.rc-tl-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--dark-3);
+  margin-bottom: 6px;
+}
+
+.rc-tl-meta span { display: flex; align-items: center; gap: 4px; }
+
+.rc-tl-ctc {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark-1);
+  margin-bottom: 4px;
+}
+
+.rc-tl-ctc .ctc-val { color: var(--primary); }
+
+.rc-tl-remarks {
+  font-size: 12px;
+  color: var(--dark-3);
+  font-style: italic;
+}
+
+/* ─── Empty / search prompt state ───────────────────────────────────────── */
+.rc-prompt {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--dark-3);
+}
+
+.rc-prompt i {
+  font-size: 56px;
+  color: var(--primary-light);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.rc-prompt h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark-1);
+  margin-bottom: 8px;
+}
+
+.rc-prompt p { font-size: 14px; }
+
+/* ─── Topbar user button (same pattern as home) ──────────────────────────── */
+.rc-userbtn {
+  background: none;
+  border: 1.5px solid var(--light-1);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--dark-2);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.rc-userbtn:hover { border-color: var(--primary); color: var(--primary); }

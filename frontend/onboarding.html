@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --main:    #3377FF;
+  --darker:  #2659BF;
+  --subtle:  #E3EDFF;
+  --success: #06C270;
+  --warning: #FFCC00;
+  --error:   #FF3B3B;
+  --dark1:   #3A3A3C;
+  --dark2:   #6B7588;
+  --dark3:   #8F90A6;
+  --dark4:   #C7C9D9;
+  --light1:  #DDE5E9;
+  --light2:  #EBEBF0;
+  --light3:  #F2F2F5;
+  --light4:  #FAFAFC;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--light3);
+  color: var(--dark1);
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ─────────────────────────────────── */
+.topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--light1);
+  padding: 0 32px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-icon {
+  width: 34px; height: 34px;
+  background: var(--main);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--dark1);
+}
+
+.topbar-sep {
+  width: 1px; height: 22px;
+  background: var(--light1);
+}
+
+.page-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark2);
+}
+
+.topbar-right { display: flex; gap: 10px; align-items: center; }
+
+/* ── BUTTONS ────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: 'Mulish', sans-serif; font-weight: 700;
+  transition: all 0.15s; font-size: 14px; padding: 9px 20px;
+}
+.btn-primary   { background: var(--main);    color: #fff; }
+.btn-primary:hover { background: var(--darker); }
+.btn-ghost {
+  background: transparent; color: var(--dark2);
+  border: 1.5px solid var(--light1);
+}
+.btn-ghost:hover { border-color: var(--main); color: var(--main); }
+.btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 6px; }
+.btn-success { background: rgba(6,194,112,0.1); color: var(--success); border: 1px solid rgba(6,194,112,0.25); }
+.btn-success:hover { background: var(--success); color: #fff; }
+.btn-danger  { background: rgba(255,59,59,0.08); color: var(--error); border: 1px solid rgba(255,59,59,0.2); }
+.btn-danger:hover  { background: var(--error); color: #fff; }
+
+/* ── PAGE LAYOUT ────────────────────────────── */
+.page { max-width: 1200px; margin: 0 auto; padding: 28px 32px 60px; }
+
+/* ── VIEW SWITCHER ──────────────────────────── */
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  background: #fff;
+  border: 1.5px solid var(--light1);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+.view-tab {
+  padding: 8px 20px;
+  border-radius: 7px;
+  border: none;
+  background: none;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--dark3);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.view-tab.active { background: var(--main); color: #fff; }
+.view-tab:hover:not(.active) { color: var(--dark1); }
+
+/* ── SECTION HEADING ────────────────────────── */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.section-head h2 {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--dark1);
+}
+
+.section-head p {
+  font-size: 13px;
+  color: var(--dark3);
+  margin-top: 2px;
+}
+
+/* ── STAT CARDS ROW ─────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1.5px solid var(--light2);
+  border-radius: 12px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.si-blue   { background: var(--subtle); }
+.si-green  { background: rgba(6,194,112,0.10); }
+.si-yellow { background: rgba(255,204,0,0.12); }
+.si-red    { background: rgba(255,59,59,0.08); }
+
+.stat-num {
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--dark1);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 12px;
+  color: var(--dark3);
+  margin-top: 3px;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 600;
+}
+
+/* ── HR DASHBOARD TABLE ─────────────────────── */
+.table-card {
+  background: #fff;
+  border: 1.5px solid var(--light2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-card thead th {
+  background: var(--light4);
+  padding: 12px 20px;
+  text-align: left;
+  font-family: 'Mulish', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dark3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid var(--light2);
+}
+
+.table-card tbody tr {
+  border-bottom: 1px solid var(--light3);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+
+.table-card tbody tr:last-child { border-bottom: none; }
+.table-card tbody tr:hover { background: var(--light4); }
+
+.table-card tbody td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--dark1);
+  vertical-align: middle;
+}
+
+.emp-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--subtle);
+  color: var(--main);
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.emp-cell-info .emp-name { font-weight: 600; font-size: 14px; color: var(--dark1); }
+.emp-cell-info .emp-role { font-size: 12px; color: var(--dark3); margin-top: 1px; }
+
+/* ── PROGRESS BAR ───────────────────────────── */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 7px;
+  background: var(--light2);
+  border-radius: 100px;
+  overflow: hidden;
+  min-width: 100px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.full     { background: var(--success); }
+.progress-fill.high     { background: #34D399; }
+.progress-fill.mid      { background: var(--warning); }
+.progress-fill.low      { background: var(--error); }
+
+.progress-pct {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Mulish', sans-serif;
+  min-width: 36px;
+  text-align: right;
+}
+
+.pct-full   { color: var(--success); }
+.pct-high   { color: #059669; }
+.pct-mid    { color: #B45309; }
+.pct-low    { color: var(--error); }
+
+/* ── STATUS PILL ────────────────────────────── */
+.pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pill-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.pill-verified  { background: rgba(6,194,112,0.10);  color: var(--success); border: 1px solid rgba(6,194,112,0.2);  }
+.pill-submitted { background: rgba(51,119,255,0.10); color: var(--main);    border: 1px solid rgba(51,119,255,0.2); }
+.pill-pending   { background: rgba(255,204,0,0.12);  color: #B45309;        border: 1px solid rgba(255,204,0,0.25); }
+.pill-rejected  { background: rgba(255,59,59,0.08);  color: var(--error);   border: 1px solid rgba(255,59,59,0.2);  }
+
+/* ── EMPLOYEE CHECKLIST VIEW ────────────────── */
+.checklist-header {
+  background: #fff;
+  border: 1.5px solid var(--light2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.checklist-avatar {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: var(--subtle);
+  color: var(--main);
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.checklist-info { flex: 1; }
+.checklist-info h2 { font-weight: 700; font-size: 20px; }
+.checklist-info p  { font-size: 13px; color: var(--dark3); margin-top: 3px; }
+
+.checklist-prog { text-align: right; }
+.checklist-prog .big-pct {
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--dark1);
+  line-height: 1;
+}
+.checklist-prog .prog-lbl {
+  font-size: 12px;
+  color: var(--dark3);
+  margin-top: 4px;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 600;
+}
+
+.checklist-progress-bar {
+  height: 8px;
+  background: var(--light2);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-top: 8px;
+  width: 180px;
+  margin-left: auto;
+}
+
+/* ── CHECKLIST ITEMS ────────────────────────── */
+.checklist-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checklist-item {
+  background: #fff;
+  border: 1.5px solid var(--light2);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+}
+
+.checklist-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+.checklist-item.status-verified { border-left: 4px solid var(--success); }
+.checklist-item.status-submitted { border-left: 4px solid var(--main); }
+.checklist-item.status-rejected  { border-left: 4px solid var(--error); }
+.checklist-item.status-pending   { border-left: 4px solid var(--light1); }
+
+.item-row {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 16px;
+}
+
+.item-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid var(--light1);
+}
+
+.item-check.verified  { background: var(--success); border-color: var(--success); }
+.item-check.submitted { background: var(--main);    border-color: var(--main); }
+.item-check.rejected  { background: var(--error);   border-color: var(--error); }
+.item-check.pending   { background: #fff; }
+
+.item-main { flex: 1; }
+
+.item-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--dark1);
+}
+
+.item-label.done { text-decoration: line-through; color: var(--dark3); }
+
+.item-dates {
+  font-size: 12px;
+  color: var(--dark3);
+  margin-top: 3px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── DOCUMENTS LIST ─────────────────────────── */
+.docs-panel {
+  background: var(--light4);
+  border-top: 1px solid var(--light2);
+  padding: 12px 20px 14px 58px;
+}
+
+.docs-title {
+  font-family: 'Mulish', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dark3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+}
+
+.doc-list { display: flex; flex-direction: column; gap: 6px; }
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--light2);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.doc-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: var(--subtle);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.doc-name { font-size: 13px; font-weight: 600; flex: 1; }
+.doc-meta { font-size: 11px; color: var(--dark3); }
+
+.doc-delete {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--dark4);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.doc-delete:hover { background: rgba(255,59,59,0.08); color: var(--error); }
+
+.add-doc-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.field-input {
+  padding: 8px 12px;
+  border: 1.5px solid var(--light1);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--dark1);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.field-input::placeholder { color: var(--dark4); }
+.field-input:focus { border-color: var(--main); box-shadow: 0 0 0 3px rgba(51,119,255,0.10); }
+
+/* ── NOTES ──────────────────────────────────── */
+.notes-panel {
+  background: rgba(255,204,0,0.05);
+  border-top: 1px solid rgba(255,204,0,0.2);
+  padding: 10px 20px 10px 58px;
+  font-size: 13px;
+  color: var(--dark2);
+  font-style: italic;
+}
+
+/* ── EMPTY ──────────────────────────────────── */
+.empty-box {
+  background: #fff;
+  border: 1.5px dashed var(--light1);
+  border-radius: 12px;
+  padding: 64px;
+  text-align: center;
+}
+
+.empty-box h3 { font-weight: 700; font-size: 18px; margin-top: 16px; }
+.empty-box p  { font-size: 13px; color: var(--dark3); margin-top: 6px; }
+
+/* ── MODAL ──────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,12,20,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 900;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 440px;
+  max-width: 92vw;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  transform: scale(0.95);
+  transition: transform 0.2s;
+}
+
+.modal-overlay.open .modal { transform: scale(1); }
+
+.modal-title {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+
+.modal-field { margin-bottom: 14px; }
+.modal-field label {
+  display: block;
+  font-family: 'Mulish', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark3);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 5px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* ── TOAST ──────────────────────────────────── */
+.toast-wrap {
+  position: fixed; bottom: 28px; right: 28px;
+  z-index: 9999;
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.toast {
+  background: var(--dark1); color: #fff;
+  padding: 13px 18px; border-radius: 10px;
+  font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  display: flex; align-items: center; gap: 10px;
+  min-width: 260px;
+  transform: translateX(130%); opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.toast.visible   { transform: translateX(0); opacity: 1; }
+.toast.success   { border-left: 4px solid var(--success); }
+.toast.error     { border-left: 4px solid var(--error); }
+
+/* ── SEARCH BAR ─────────────────────────────── */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.search-bar .field-input { flex: 1; max-width: 340px; }
+
+
+/* ── FILE DROP ZONE ─────────────────────────────── */
+.file-drop-zone {
+  border: 2px dashed var(--light1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--light4);
+  color: var(--dark3);
+  font-size: 13px;
+}
+
+.file-drop-zone:hover,
+.file-drop-zone.dragover {
+  border-color: var(--main);
+  background: var(--subtle);
+  color: var(--main);
+}
+
+.file-drop-zone.has-file {
+  border-color: var(--success);
+  background: rgba(6,194,112,0.05);
+  color: var(--success);
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="brand-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    </div>
+    <span class="brand-name">Employee Directory</span>
+    <div class="topbar-sep"></div>
+    <span class="page-title">Onboarding Tracker</span>
+  </div>
+  <div class="topbar-right">
+    <a href="/" class="btn btn-ghost">← Back to Directory</a>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="view-tab active" id="tabHR" onclick="showView('hr')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      HR Dashboard
+    </button>
+    <button class="view-tab" id="tabEmp" onclick="showView('emp')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Employee Checklist
+    </button>
+  </div>
+
+  <!-- ── HR DASHBOARD VIEW ──────────────────── -->
+  <div id="view-hr">
+
+    <div class="section-head">
+      <div>
+        <h2>Onboarding Progress — All Employees</h2>
+        <p>Live completion status for every active employee</p>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="loadDashboard()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Refresh
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" id="dashStats">
+      <div class="stat-card">
+        <div class="stat-icon si-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3377FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-num" id="s-total">—</div>
+          <div class="stat-lbl">Total Employees</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06C270" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-num" id="s-complete">—</div>
+          <div class="stat-lbl">Fully Onboarded</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-yellow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-num" id="s-inprog">—</div>
+          <div class="stat-lbl">In Progress</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-red">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF3B3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-num" id="s-blocked">—</div>
+          <div class="stat-lbl">Have Rejections</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card" id="dashTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Joining Date</th>
+            <th>Completion</th>
+            <th>Verified</th>
+            <th>Submitted</th>
+            <th>Pending</th>
+            <th>Rejected</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="dashBody">
+          <tr><td colspan="8" style="text-align:center;padding:32px;color:var(--dark3)">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ── EMPLOYEE CHECKLIST VIEW ───────────── -->
+  <div id="view-emp" style="display:none">
+
+    <div class="section-head">
+      <div>
+        <h2>Employee Onboarding Checklist</h2>
+        <p>View and manage checklist items and documents for any employee</p>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar">
+      <input class="field-input" id="empSearch" placeholder="Enter Emp ID (e.g. EMP101)" style="width:260px">
+      <button class="btn btn-primary" onclick="loadChecklist()">Load Checklist</button>
+      <button class="btn btn-ghost btn-sm" id="btnInit" onclick="initChecklist()" style="display:none">
+        + Init Default Checklist
+      </button>
+    </div>
+
+    <!-- Checklist content -->
+    <div id="checklistContent">
+      <div class="empty-box">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C7C9D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <h3>Enter an Emp ID above</h3>
+        <p>The checklist will appear here</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ADD DOCUMENT MODAL -->
+<div class="modal-overlay" id="docModal">
+  <div class="modal">
+    <div class="modal-title">Add Document</div>
+    <input type="hidden" id="modalItemId">
+
+    <!-- File upload zone -->
+    <div class="modal-field">
+      <label>Upload File (optional)</label>
+      <div class="file-drop-zone" id="fileDropZone" onclick="document.getElementById('modalFile').click()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C7C9D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <div id="fileDropText">Click to choose file or drag & drop</div>
+        <div style="font-size:11px;color:var(--dark4);margin-top:4px">PDF, JPG, PNG, DOCX supported</div>
+      </div>
+      <input type="file" id="modalFile" style="display:none" accept=".pdf,.jpg,.jpeg,.png,.docx,.doc,.xlsx,.txt"
+        onchange="handleFileSelect(this)">
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;margin:12px 0 8px">
+      <div style="flex:1;height:1px;background:var(--light2)"></div>
+      <span style="font-size:12px;color:var(--dark4)">OR enter manually</span>
+      <div style="flex:1;height:1px;background:var(--light2)"></div>
+    </div>
+
+    <div class="modal-field">
+      <label>Document Name</label>
+      <input class="field-input" id="modalDocName" placeholder="e.g. Aadhaar_Front.pdf" style="width:100%">
+    </div>
+    <div class="modal-field">
+      <label>Document Type</label>
+      <select class="field-input" id="modalDocType" style="width:100%">
+        <option value="PDF">PDF</option>
+        <option value="JPG">JPG / Image</option>
+        <option value="PNG">PNG / Image</option>
+        <option value="DOCX">Word Document</option>
+        <option value="XLSX">Excel Sheet</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Uploaded By</label>
+      <input class="field-input" id="modalUploadedBy" value="HR" style="width:100%">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeDocModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitDocument()">Add Document</button>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE STATUS MODAL -->
+<div class="modal-overlay" id="statusModal">
+  <div class="modal">
+    <div class="modal-title">Update Status</div>
+    <input type="hidden" id="sModalItemId">
+    <div class="modal-field">
+      <label>Status</label>
+      <select class="field-input" id="sModalStatus" style="width:100%">
+        <option value="Pending">Pending</option>
+        <option value="Submitted">Submitted</option>
+        <option value="Verified">Verified</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Notes (optional)</label>
+      <input class="field-input" id="sModalNotes" placeholder="e.g. Document unclear, resubmit" style="width:100%">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeStatusModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitStatus()">Update</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+
+const API = 'http://127.0.0.1:8000/api'
+let currentEmpId = null
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+function initials(n) {
+  return n ? n.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase() : '?'
+}
+
+function fmtDate(d) {
+  if (!d) return '—'
+  return new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
+function progressClass(pct) {
+  if (pct === 100) return 'full'
+  if (pct >= 70)   return 'high'
+  if (pct >= 40)   return 'mid'
+  return 'low'
+}
+
+function pctClass(pct) {
+  if (pct === 100) return 'pct-full'
+  if (pct >= 70)   return 'pct-high'
+  if (pct >= 40)   return 'pct-mid'
+  return 'pct-low'
+}
+
+function pillHtml(status) {
+  const map = {
+    Verified:  'pill-verified',
+    Submitted: 'pill-submitted',
+    Pending:   'pill-pending',
+    Rejected:  'pill-rejected',
+  }
+  return `<span class="pill ${map[status] || 'pill-pending'}"><span class="pill-dot"></span>${status}</span>`
+}
+
+function checkIcon(status) {
+  const white = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">`
+  if (status === 'Verified')  return white + `<polyline points="20 6 9 17 4 12"/></svg>`
+  if (status === 'Submitted') return white + `<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`
+  if (status === 'Rejected')  return white + `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+  return ''
+}
+
+function showToast(msg, type = 'success') {
+  const wrap = document.getElementById('toastWrap')
+  const t = document.createElement('div')
+  t.className = `toast ${type}`
+  const icon = type === 'success'
+    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06C270" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`
+    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF3B3B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+  t.innerHTML = icon + msg
+  wrap.appendChild(t)
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('visible')))
+  setTimeout(() => { t.classList.remove('visible'); setTimeout(() => t.remove(), 350) }, 3200)
+}
+
+// ── View switcher ─────────────────────────────────────────────────────────
+function showView(name) {
+  document.getElementById('view-hr').style.display  = name === 'hr'  ? '' : 'none'
+  document.getElementById('view-emp').style.display = name === 'emp' ? '' : 'none'
+  document.getElementById('tabHR').classList.toggle('active',  name === 'hr')
+  document.getElementById('tabEmp').classList.toggle('active', name === 'emp')
+  if (name === 'hr') loadDashboard()
+}
+
+// ── HR DASHBOARD ──────────────────────────────────────────────────────────
+async function loadDashboard() {
+  document.getElementById('dashBody').innerHTML =
+    '<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--dark3)">Loading…</td></tr>'
+
+  try {
+    const res  = await fetch(`${API}/onboarding/dashboard/`)
+    const data = await res.json()
+    renderDashboard(data)
+  } catch (e) {
+    document.getElementById('dashBody').innerHTML =
+      `<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--error)">Could not reach server</td></tr>`
+  }
+}
+
+function renderDashboard(data) {
+  const emps     = data.employees || []
+  const total    = emps.length
+  const complete = emps.filter(e => e.summary.percent === 100).length
+  const inprog   = emps.filter(e => e.summary.percent > 0 && e.summary.percent < 100).length
+  const blocked  = emps.filter(e => e.summary.rejected > 0).length
+
+  document.getElementById('s-total').textContent    = total
+  document.getElementById('s-complete').textContent = complete
+  document.getElementById('s-inprog').textContent   = inprog
+  document.getElementById('s-blocked').textContent  = blocked
+
+  if (!emps.length) {
+    document.getElementById('dashBody').innerHTML =
+      '<tr><td colspan="8" style="text-align:center;padding:48px;color:var(--dark3)">No onboarding data. Create employees and init their checklists.</td></tr>'
+    return
+  }
+
+  document.getElementById('dashBody').innerHTML = emps.map(e => {
+    const s   = e.summary
+    const cls = progressClass(s.percent)
+    return `<tr onclick="goToChecklist('${e.emp_id}')">
+      <td>
+        <div class="emp-cell">
+          <div class="mini-avatar">${initials(e.name)}</div>
+          <div class="emp-cell-info">
+            <div class="emp-name">${e.name}</div>
+            <div class="emp-role">${e.emp_id} · ${e.designation}</div>
+          </div>
+        </div>
+      </td>
+      <td style="color:var(--dark2);font-size:13px">${fmtDate(e.joining_date)}</td>
+      <td>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill ${cls}" style="width:${s.percent}%"></div></div>
+          <span class="progress-pct ${pctClass(s.percent)}">${s.percent}%</span>
+        </div>
+      </td>
+      <td><span style="color:var(--success);font-weight:700">${s.verified}</span></td>
+      <td><span style="color:var(--main);font-weight:700">${s.submitted}</span></td>
+      <td><span style="color:#B45309;font-weight:700">${s.pending}</span></td>
+      <td><span style="color:var(--error);font-weight:700">${s.rejected}</span></td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();goToChecklist('${e.emp_id}')">
+          View →
+        </button>
+      </td>
+    </tr>`
+  }).join('')
+}
+
+function goToChecklist(empId) {
+  document.getElementById('empSearch').value = empId
+  showView('emp')
+  loadChecklist()
+}
+
+// ── EMPLOYEE CHECKLIST ────────────────────────────────────────────────────
+async function loadChecklist() {
+  const empId = document.getElementById('empSearch').value.trim().toUpperCase()
+  if (!empId) return
+
+  currentEmpId = empId
+  document.getElementById('checklistContent').innerHTML =
+    '<div style="text-align:center;padding:40px;color:var(--dark3)">Loading checklist…</div>'
+  document.getElementById('btnInit').style.display = 'none'
+
+  try {
+    const res  = await fetch(`${API}/onboarding/${empId}/`)
+    if (res.status === 404) {
+      const d = await res.json()
+      document.getElementById('checklistContent').innerHTML =
+        `<div class="empty-box"><h3>${d.error || 'Employee not found'}</h3></div>`
+      return
+    }
+
+    const data = await res.json()
+    if (!data.checklist || !data.checklist.length) {
+      document.getElementById('btnInit').style.display = ''
+      document.getElementById('checklistContent').innerHTML =
+        `<div class="empty-box">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C7C9D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <h3>No checklist found for ${data.name}</h3>
+          <p>Click "Init Default Checklist" above to create one</p>
+        </div>`
+      return
+    }
+    renderChecklist(data)
+
+  } catch (e) {
+    document.getElementById('checklistContent').innerHTML =
+      `<div class="empty-box"><h3>Could not reach server</h3><p>Is Django running on port 8000?</p></div>`
+  }
+}
+
+function renderChecklist(data) {
+  const s   = data.summary
+  const cls = progressClass(s.percent)
+
+  let html = `
+    <div class="checklist-header">
+      <div class="checklist-avatar">${initials(data.name)}</div>
+      <div class="checklist-info">
+        <h2>${data.name}</h2>
+        <p>${data.emp_id} · ${s.verified} verified · ${s.submitted} submitted · ${s.pending} pending${s.rejected ? ` · <span style="color:var(--error)">${s.rejected} rejected</span>` : ''}</p>
+      </div>
+      <div class="checklist-prog">
+        <div class="big-pct ${pctClass(s.percent)}">${s.percent}%</div>
+        <div class="prog-lbl">Complete</div>
+        <div class="checklist-progress-bar">
+          <div class="progress-fill ${cls}" style="width:${s.percent}%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="checklist-grid">`
+
+  data.checklist.forEach(item => {
+    const statusCls = item.status.toLowerCase()
+    const isDone    = item.status === 'Verified'
+
+    html += `<div class="checklist-item status-${statusCls}" id="ci-${item.id}">
+      <div class="item-row">
+        <div class="item-check ${statusCls}">${checkIcon(item.status)}</div>
+        <div class="item-main">
+          <div class="item-label ${isDone ? 'done' : ''}">${item.item_label}</div>
+          <div class="item-dates">`
+
+    if (item.submitted_on) html += `Submitted ${fmtDate(item.submitted_on)}`
+    if (item.verified_on)  html += ` · Verified ${fmtDate(item.verified_on)}`
+    if (!item.submitted_on && !item.verified_on) html += 'Not yet submitted'
+
+    html += `</div></div>
+        <div class="item-actions">
+          ${pillHtml(item.status)}
+          <button class="btn btn-ghost btn-sm" onclick="openStatusModal(${item.id}, '${item.status}', \`${(item.notes || '').replace(/`/g, '')}\`)">Edit</button>
+          <button class="btn btn-success btn-sm" onclick="openDocModal(${item.id})">+ Doc</button>
+        </div>
+      </div>`
+
+    // Notes
+    if (item.notes) {
+      html += `<div class="notes-panel">📝 ${item.notes}</div>`
+    }
+
+    // Documents
+    html += `<div class="docs-panel" id="docs-${item.id}">`
+    if (item.documents && item.documents.length) {
+      html += `<div class="docs-title">Documents (${item.documents.length})</div><div class="doc-list">`
+      item.documents.forEach(doc => {
+        html += `<div class="doc-item">
+          <div class="doc-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3377FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="doc-name">${doc.doc_name}</div>
+          <div class="doc-meta">${doc.doc_type || ''} · ${fmtDate(doc.uploaded_on)}</div>
+          <button class="doc-delete" onclick="deleteDocument(${doc.id}, ${item.id})" title="Remove">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>`
+      })
+      html += `</div>`
+    } else {
+      html += `<div style="font-size:12px;color:var(--dark4);font-style:italic">No documents uploaded yet</div>`
+    }
+    html += `</div></div>`
+  })
+
+  html += '</div>'
+  document.getElementById('checklistContent').innerHTML = html
+}
+
+// ── Init checklist ────────────────────────────────────────────────────────
+async function initChecklist() {
+  if (!currentEmpId) return
+  try {
+    const res  = await fetch(`${API}/onboarding/${currentEmpId}/init/`, { method: 'POST' })
+    const data = await res.json()
+    showToast(data.message || 'Checklist initialised', 'success')
+    loadChecklist()
+    document.getElementById('btnInit').style.display = 'none'
+  } catch (e) {
+    showToast('Could not initialise checklist', 'error')
+  }
+}
+
+// ── Status modal ──────────────────────────────────────────────────────────
+function openStatusModal(itemId, currentStatus, currentNotes) {
+  document.getElementById('sModalItemId').value   = itemId
+  document.getElementById('sModalStatus').value   = currentStatus
+  document.getElementById('sModalNotes').value    = currentNotes || ''
+  document.getElementById('statusModal').classList.add('open')
+}
+
+function closeStatusModal() {
+  document.getElementById('statusModal').classList.remove('open')
+}
+
+async function submitStatus() {
+  const itemId = document.getElementById('sModalItemId').value
+  const status = document.getElementById('sModalStatus').value
+  const notes  = document.getElementById('sModalNotes').value.trim()
+
+  try {
+    const res  = await fetch(`${API}/onboarding/item/${itemId}/`, {
+      method:  'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ status, notes }),
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error)
+    showToast(`Status updated to ${status}`, 'success')
+    closeStatusModal()
+    loadChecklist()
+  } catch (e) {
+    showToast(e.message || 'Update failed', 'error')
+  }
+}
+
+// ── Doc modal ─────────────────────────────────────────────────────────────
+function openDocModal(itemId) {
+  document.getElementById('modalItemId').value  = itemId
+  document.getElementById('modalDocName').value = ''
+  document.getElementById('docModal').classList.add('open')
+  setTimeout(setupDragDrop, 30)
+}
+
+function closeDocModal() {
+  document.getElementById('docModal').classList.remove('open')
+  // Reset file input
+  document.getElementById('modalFile').value = ''
+  document.getElementById('fileDropText').textContent = 'Click to choose file or drag & drop'
+  const zone = document.getElementById('fileDropZone')
+  zone.classList.remove('has-file', 'dragover')
+}
+
+function handleFileSelect(input) {
+  const file = input.files[0]
+  if (!file) return
+  const zone = document.getElementById('fileDropZone')
+  zone.classList.add('has-file')
+  document.getElementById('fileDropText').textContent = '📎 ' + file.name
+
+  // Auto-fill name and type fields
+  document.getElementById('modalDocName').value = file.name
+  const ext = file.name.split('.').pop().toUpperCase()
+  const typeMap = { PDF:'PDF', JPG:'JPG', JPEG:'JPG', PNG:'PNG', DOC:'DOCX', DOCX:'DOCX', XLS:'XLSX', XLSX:'XLSX' }
+  const sel = document.getElementById('modalDocType')
+  const mapped = typeMap[ext]
+  if (mapped) {
+    for (let opt of sel.options) { if (opt.value === mapped) { sel.value = mapped; break } }
+  }
+}
+
+// Drag & drop support
+function setupDragDrop() {
+  const zone = document.getElementById('fileDropZone')
+  if (!zone) return
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover') })
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'))
+  zone.addEventListener('drop', e => {
+    e.preventDefault()
+    zone.classList.remove('dragover')
+    const file = e.dataTransfer.files[0]
+    if (file) {
+      const input = document.getElementById('modalFile')
+      const dt = new DataTransfer()
+      dt.items.add(file)
+      input.files = dt.files
+      handleFileSelect(input)
+    }
+  })
+}
+
+async function submitDocument() {
+  const item_id     = document.getElementById('modalItemId').value.trim()
+  const doc_name    = document.getElementById('modalDocName').value.trim()
+  const doc_type    = document.getElementById('modalDocType').value
+  const uploaded_by = document.getElementById('modalUploadedBy').value.trim() || 'HR'
+  const fileInput   = document.getElementById('modalFile')
+  const file        = fileInput && fileInput.files && fileInput.files[0]
+
+  // Determine final document name
+  const finalName = doc_name || (file ? file.name : '')
+  if (!finalName) {
+    showToast('Please upload a file or enter a document name', 'error')
+    return
+  }
+  if (!item_id) {
+    showToast('No checklist item selected', 'error')
+    return
+  }
+
+  try {
+    // Always use JSON — simpler, no multipart boundary issues
+    // We store file name/type as metadata (no binary storage needed for demo)
+    const payload = {
+      item_id:     parseInt(item_id),
+      doc_name:    finalName,
+      doc_type:    doc_type || (file ? file.name.split('.').pop().toUpperCase() : 'File'),
+      uploaded_by: uploaded_by,
+    }
+
+    const res = await fetch(`${API}/onboarding/document/`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    })
+
+    // Safe parse — Django may return HTML error page on crash
+    const rawText = await res.text()
+    let data = {}
+    try {
+      data = JSON.parse(rawText)
+    } catch {
+      // Django returned HTML — extract error message
+      const match = rawText.match(/<pre[^>]*>([\s\S]*?)<\/pre>/)
+      const hint  = match ? match[1].trim().slice(0, 120) : `HTTP ${res.status}`
+      throw new Error('Django error: ' + hint)
+    }
+
+    if (!res.ok) throw new Error(data.error || `Server error ${res.status}`)
+
+    showToast(`"${data.doc_name || finalName}" added`, 'success')
+    closeDocModal()
+    loadChecklist()
+
+  } catch (e) {
+    console.error('[submitDocument]', e)
+    showToast(e.message || 'Failed to add document', 'error')
+  }
+}
+
+async function deleteDocument(docId, itemId) {
+  if (!confirm('Remove this document?')) return
+  try {
+    const res  = await fetch(`${API}/onboarding/document/${docId}/`, { method: 'DELETE' })
+    const text = await res.text()
+    let data = {}
+    try { data = JSON.parse(text) } catch {}
+    if (!res.ok) throw new Error(data.error || `Error ${res.status}`)
+    showToast('Document removed', 'success')
+    loadChecklist()
+  } catch (e) {
+    showToast(e.message || 'Failed to remove document', 'error')
+  }
+}
+
+// ── Enter key support ─────────────────────────────────────────────────────
+document.getElementById('empSearch').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loadChecklist()
+})
+
+// ── Init ──────────────────────────────────────────────────────────────────
+loadDashboard()
+setupDragDrop()
+</script>
+</body>
+</html>

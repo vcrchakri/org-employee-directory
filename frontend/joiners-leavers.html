@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joiners & Leavers Report</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&family=Mulish:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --main: #3377FF;
+            --darker: #2659BF;
+            --subtle: #E3EDFF;
+            --success: #06C270;
+            --warning: #FFCC00;
+            --error: #FF3B3B;
+            --dark1: #3A3A3C;
+            --dark2: #6B7588;
+            --dark3: #8F90A6;
+            --dark4: #C7C9D9;
+            --light1: #DDE5E9;
+            --light2: #EBEBF0;
+            --light3: #F2F2F5;
+            --light4: #FAFAFC;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light3);
+            color: var(--dark1);
+            min-height: 100vh;
+        }
+
+        /* ── TOPBAR ─────────────────────────────────── */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--light1);
+            padding: 0 32px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--main);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--dark1);
+        }
+
+        .topbar-sep {
+            width: 1px;
+            height: 22px;
+            background: var(--light1);
+        }
+
+        .page-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark2);
+        }
+
+        .topbar-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* ── BUTTONS ────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Mulish', sans-serif;
+            font-weight: 700;
+            transition: all 0.15s;
+            font-size: 14px;
+            padding: 9px 20px;
+        }
+
+        .btn-primary {
+            background: var(--main);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--darker);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--dark2);
+            border: 1.5px solid var(--light1);
+            text-decoration: none;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--main);
+            color: var(--main);
+        }
+
+        /* ── PAGE LAYOUT ────────────────────────────── */
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 32px 60px;
+        }
+
+        .section-head {
+            margin-bottom: 24px;
+        }
+
+        .section-head h2 {
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--dark1);
+        }
+
+        .section-head p {
+            font-size: 14px;
+            color: var(--dark3);
+            margin-top: 4px;
+        }
+
+        /* ── CONTROLS ───────────────────────────────── */
+        .controls-card {
+            background: #fff;
+            border: 1.5px solid var(--light2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-group label {
+            font-family: 'Mulish', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-input {
+            padding: 10px 14px;
+            border: 1.5px solid var(--light1);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--dark1);
+            background: #fff;
+            outline: none;
+            transition: border-color 0.18s;
+            width: 220px;
+        }
+
+        .field-input:focus {
+            border-color: var(--main);
+        }
+
+        /* ── STATS ROW ──────────────────────────────── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1.5px solid var(--light2);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--dark2);
+            margin-bottom: 8px;
+        }
+
+        .stat-num {
+            font-weight: 700;
+            font-size: 32px;
+            color: var(--dark1);
+            line-height: 1;
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--dark3);
+            margin-top: 8px;
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .text-error {
+            color: var(--error);
+        }
+
+        /* ── CHART & TABLE ──────────────────────────── */
+        .chart-card {
+            background: #fff;
+            border: 1.5px solid var(--light2);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            height: 400px;
+        }
+
+        .table-card {
+            background: #fff;
+            border: 1.5px solid var(--light2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-card table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-card thead th {
+            background: var(--light4);
+            padding: 14px 20px;
+            text-align: left;
+            font-family: 'Mulish', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark3);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--light2);
+        }
+
+        .table-card tbody tr {
+            border-bottom: 1px solid var(--light3);
+            transition: background 0.12s;
+        }
+
+        .table-card tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .table-card tbody tr:hover {
+            background: var(--light4);
+        }
+
+        .table-card tbody td {
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--dark1);
+        }
+
+        .net-pos {
+            color: var(--success);
+            font-weight: 600;
+            padding: 4px 8px;
+            background: rgba(6, 194, 112, 0.1);
+            border-radius: 6px;
+        }
+
+        .net-neg {
+            color: var(--error);
+            font-weight: 600;
+            padding: 4px 8px;
+            background: rgba(255, 59, 59, 0.1);
+            border-radius: 6px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: var(--dark3);
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="brand-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+            </div>
+            <span class="brand-name">Employee Directory</span>
+            <div class="topbar-sep"></div>
+            <span class="page-title">Joiners & Leavers</span>
+        </div>
+        <div class="topbar-right">
+            <a href="index.html" class="btn btn-ghost">← Back to Directory</a>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="section-head">
+            <h2>Monthly Hiring & Attrition</h2>
+            <p>Insights into joiner and leaver trends over time.</p>
+        </div>
+
+        <div class="controls-card">
+            <div class="field-group">
+                <label>Start Date</label>
+                <input type="date" class="field-input" id="startDate">
+            </div>
+            <div class="field-group">
+                <label>End Date</label>
+                <input type="date" class="field-input" id="endDate">
+            </div>
+            <button class="btn btn-primary" id="generateBtn" onclick="fetchReport()"
+                style="margin-left:auto; height: 43px;">
+                Generate Report
+            </button>
+        </div>
+
+        <div id="errorMsg" style="color:var(--error); margin-bottom: 20px; font-weight: 500; display:none;"></div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3>Total Joiners</h3>
+                <div class="stat-num text-success" id="totJoiners">—</div>
+                <div class="stat-sub">In selected period</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Leavers</h3>
+                <div class="stat-num text-error" id="totLeavers">—</div>
+                <div class="stat-sub">In selected period</div>
+            </div>
+            <div class="stat-card">
+                <h3>Net Change</h3>
+                <div class="stat-num" id="totNet">—</div>
+                <div class="stat-sub">In selected period</div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <canvas id="chartCanvas"></canvas>
+        </div>
+
+        <div class="table-card" id="tableContainer" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Joiners</th>
+                        <th>Leavers</th>
+                        <th>Net Change</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://127.0.0.1:8000/api'
+        let chartInstance = null
+
+        // Defaults
+        const today = new Date()
+        const sixMonthsAgo = new Date()
+        sixMonthsAgo.setMonth(today.getMonth() - 5)
+        sixMonthsAgo.setDate(1)
+
+        document.getElementById('startDate').value = sixMonthsAgo.toISOString().split('T')[0]
+        document.getElementById('endDate').value = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0]
+
+        async function fetchReport() {
+            const start = document.getElementById('startDate').value
+            const end = document.getElementById('endDate').value
+            const btn = document.getElementById('generateBtn')
+            const errorMsg = document.getElementById('errorMsg')
+
+            btn.disabled = true
+            btn.textContent = 'Generating...'
+            errorMsg.style.display = 'none'
+
+            try {
+                const res = await fetch(`${API}/reports/joiners-leavers/?start_date=${start}&end_date=${end}`)
+                const json = await res.json()
+                if (!res.ok) throw new Error(json.error || 'Failed to fetch')
+
+                renderData(json.data || [])
+            } catch (e) {
+                errorMsg.textContent = e.message
+                errorMsg.style.display = 'block'
+            } finally {
+                btn.disabled = false
+                btn.textContent = 'Generate Report'
+            }
+        }
+
+        function renderData(data) {
+            const totJ = data.reduce((a, c) => a + c.joiners, 0)
+            const totL = data.reduce((a, c) => a + c.leavers, 0)
+            const net = totJ - totL
+
+            document.getElementById('totJoiners').textContent = totJ
+            document.getElementById('totLeavers').textContent = totL
+
+            const netEl = document.getElementById('totNet')
+            netEl.textContent = (net > 0 ? '+' : '') + net
+            netEl.className = 'stat-num ' + (net >= 0 ? 'text-success' : 'text-error')
+
+            // Chart
+            const ctx = document.getElementById('chartCanvas').getContext('2d')
+            if (chartInstance) chartInstance.destroy()
+
+            if (data.length === 0) {
+                document.getElementById('tableContainer').style.display = 'none'
+                return
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.month_label),
+                    datasets: [
+                        { label: 'Joiners', data: data.map(d => d.joiners), backgroundColor: '#06C270', borderRadius: 4 },
+                        { label: 'Leavers', data: data.map(d => d.leavers), backgroundColor: '#FF3B3B', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+                }
+            })
+
+            // Table
+            document.getElementById('tableContainer').style.display = 'block'
+            document.getElementById('tableBody').innerHTML = data.map(r => {
+                const rNet = r.joiners - r.leavers
+                const netClass = rNet >= 0 ? 'net-pos' : 'net-neg'
+                const netTxt = (rNet > 0 ? '+' : '') + rNet
+                return `<tr>
+      <td><strong>${r.month_label}</strong></td>
+      <td class="text-success">${r.joiners}</td>
+      <td class="text-error">${r.leavers}</td>
+      <td><span class="${netClass}">${netTxt}</span></td>
+    </tr>`
+            }).join('')
+        }
+
+        fetchReport()
+    </script>
+</body>
+
+</html>

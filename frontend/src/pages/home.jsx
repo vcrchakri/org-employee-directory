@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.jsx'
 import '../styles/Home.css'
+import '../styles/homeNav.css'
 
 function HomePage() {
   const navigate = useNavigate()
@@ -67,6 +68,21 @@ function HomePage() {
       <main className="home-center" aria-live="polite">
         <h1 className="home-title">Welcome to hackathon</h1>
         <p className="home-subtitle">This is your Starting point of your hackathon.</p>
+
+        {/* ── Navigation Cards ── */}
+        <div className="hn-grid">
+          <button className="hn-card" onClick={() => navigate('/role-changes')}>
+            <i className="bi bi-arrow-repeat hn-icon" />
+            <div className="hn-label">Job / Role Change Tracking</div>
+            <div className="hn-desc">Record CTC, role &amp; level changes with date history</div>
+          </button>
+
+          <button className="hn-card" onClick={() => navigate('/reports')}>
+            <i className="bi bi-bar-chart-line hn-icon" />
+            <div className="hn-label">Joiners &amp; Leavers Report</div>
+            <div className="hn-desc">Monthly hiring and attrition metrics</div>
+          </button>
+        </div>
       </main>
     </div>
   )

@@ -4,7 +4,7 @@ import { useAuth } from '../auth/AuthContext.jsx'
 import { apiEmployees } from '../api/authApi.js'
 import '../styles/Home.css'
 import '../styles/homeNav.css'
-
+import Layout from "../components/Layout"
 function HomePage() {
   const navigate = useNavigate()
   const { member, signOut } = useAuth()
@@ -47,6 +47,7 @@ function HomePage() {
   }
 
   return (
+    <Layout>
     <div className="home-shell">
 
       {/* Top Bar */}
@@ -139,6 +140,7 @@ function HomePage() {
 
       </main>
     </div>
+    </Layout>
   )
 }
 

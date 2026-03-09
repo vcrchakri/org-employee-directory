@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.jsx'
 import { httpJson } from '../api/http.js'
 import '../styles/RoleChanges.css'
-
+import Layout from "../components/Layout"
 // ─── helpers ──────────────────────────────────────────────────────────────
 
 function fmtCTC(val) {
@@ -166,6 +166,7 @@ function RoleChangesPage() {
     // ── render ────────────────────────────────────────────────────────────────
 
     return (
+        <Layout>
         <div className="rc-shell">
 
             {/* ── Sidebar ──────────────────────────────────────────────────────── */}
@@ -356,6 +357,7 @@ function RoleChangesPage() {
                 </div>
             </div>
         </div>
+        </Layout>
     )
 }
 

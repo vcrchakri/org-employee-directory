@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { httpJson } from '../api/http.js'
 import '../styles/Reports.css'
-
+import Layout from "../components/Layout"
 function ReportsPage() {
     // Default to Last 6 Months
     const today = new Date()
@@ -95,6 +95,7 @@ function ReportsPage() {
     const totalLeavers = reportData.reduce((acc, curr) => acc + curr.leavers, 0)
 
     return (
+        <Layout>
         <div className="reports-page">
             <div className="reports-header">
                 <h1>Monthly Hiring & Attrition</h1>
@@ -188,6 +189,7 @@ function ReportsPage() {
 
             </div>
         </div>
+        </Layout>
     )
 }
 

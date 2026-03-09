@@ -48,3 +48,8 @@ export function apiRegister({ display_name, email, phone_number, password }) {
     body: { display_name, email, phone_number, password },
   })
 }
+export async function apiEmployees() {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/employees/`)
+  const data = await res.json()
+  return data
+}

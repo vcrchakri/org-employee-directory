@@ -1,41 +1,27 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
-import AuthPage from './pages/auth.jsx'
-import HomePage from './pages/home.jsx'
-import RoleChangesPage from './pages/RoleChanges.jsx'
-import ReportsPage from './pages/Reports.jsx'
-import RequireAuth from './auth/RequireAuth.jsx'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import HomePage from "./pages/home"
+import Reports from "./pages/Reports"
+import RoleChanges from "./pages/RoleChanges"
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/auth" replace />} />
-      <Route path="/auth" element={<AuthPage />} />
-      <Route
-        path="/home"
-        element={
-          <RequireAuth>
-            <HomePage />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/role-changes"
-        element={
-          <RequireAuth>
-            <RoleChangesPage />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/reports"
-        element={
-          <RequireAuth>
-            <ReportsPage />
-          </RequireAuth>
-        }
-      />
-      <Route path="*" element={<Navigate to="/auth" replace />} />
-    </Routes>
+    <BrowserRouter>
+
+      <Routes>
+
+        <Route element={<Layout />}>
+
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/role-changes" element={<RoleChanges />} />
+
+        </Route>
+
+      </Routes>
+
+    </BrowserRouter>
   )
 }
 

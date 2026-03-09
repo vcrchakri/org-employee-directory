@@ -8,7 +8,7 @@ export function apiLogin({ username, password }) {
 }
 
 export function apiMe({ token }) {
-  return httpJson('/api/home', {
+  return httpJson('/api/employees', {
     method: 'GET',
     token,
   })
